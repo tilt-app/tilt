@@ -10,7 +10,45 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180410170441) do
+ActiveRecord::Schema.define(version: 20180614084804) do
+
+  create_table "comments", force: :cascade do |t|
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "playlists", force: :cascade do |t|
+    t.string   "name"
+    t.string   "description"
+    t.boolean  "public"
+    t.string   "tags"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.string   "title"
+    t.string   "description"
+    t.string   "tags"
+    t.boolean  "private"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["title"], name: "index_posts_on_title"
+  end
+
+  create_table "songs", force: :cascade do |t|
+    t.string   "title"
+    t.string   "artist"
+    t.string   "album"
+    t.string   "genre"
+    t.string   "reference_link"
+    t.string   "album_art"
+    t.integer  "rating"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.index ["title"], name: "index_songs_on_title"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -25,8 +63,14 @@ ActiveRecord::Schema.define(version: 20180410170441) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.string   "username"
+    t.string   "name"
+    t.string   "city"
+    t.string   "country"
+    t.string   "contact"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["username"], name: "index_users_on_username"
   end
 
 end
