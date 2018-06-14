@@ -10,12 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180614084804) do
+ActiveRecord::Schema.define(version: 20180614093101) do
 
   create_table "comments", force: :cascade do |t|
     t.string   "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "user_id"
+    t.integer  "post_id"
+    t.integer  "parent_id"
+    t.index ["parent_id"], name: "index_comments_on_parent_id"
+    t.index ["post_id"], name: "index_comments_on_post_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "playlists", force: :cascade do |t|
@@ -25,6 +31,8 @@ ActiveRecord::Schema.define(version: 20180614084804) do
     t.string   "tags"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "user_id"
+    t.index ["user_id"], name: "index_playlists_on_user_id"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -34,7 +42,13 @@ ActiveRecord::Schema.define(version: 20180614084804) do
     t.boolean  "private"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "user_id"
+    t.integer  "song_id"
+    t.integer  "playlist_id"
+    t.index ["playlist_id"], name: "index_posts_on_playlist_id"
+    t.index ["song_id"], name: "index_posts_on_song_id"
     t.index ["title"], name: "index_posts_on_title"
+    t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
   create_table "songs", force: :cascade do |t|
@@ -47,7 +61,11 @@ ActiveRecord::Schema.define(version: 20180614084804) do
     t.integer  "rating"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.integer  "playlist_id"
+    t.integer  "user_id"
+    t.index ["playlist_id"], name: "index_songs_on_playlist_id"
     t.index ["title"], name: "index_songs_on_title"
+    t.index ["user_id"], name: "index_songs_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

@@ -3,7 +3,10 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
 
+  has_many :songs
+  has_many :playlists
   has_many :posts
+  has_many :comments
 end
 
 # This is the order in which migrations happened
